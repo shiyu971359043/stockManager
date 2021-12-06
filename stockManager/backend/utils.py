@@ -10,7 +10,7 @@ def query_realtime_price(list):
     if len(list) == 0:
         return to_return
 
-    url = 'http://hq.sinajs.cn/list='
+    url = 'http://qt.gtimg.cn/q='
     for code in list:
         url = url+code+','
         
@@ -22,10 +22,10 @@ def query_realtime_price(list):
         if len(single) > 10:
             content = re.search(r'\"([^\"]*)\"',single).group()
             
-            single_info = eval(content).split(',')
-            offset = float(single_info[3]) - float(single_info[2])
-            offset_ratio = "%.2f%%" % (offset/float(single_info[2]) * 100) 
-            single_real_time = [single_info[0],single_info[3],offset,offset_ratio,single_info[2]] #名称，现价，涨跌额，涨跌幅，昨收
+            single_info = eval(content).split('~')
+            offset = float(single_info[3]) - float(single_info[4])
+            offset_ratio = "%.2f%%" % (offset/float(single_info[4]) * 100) 
+            single_real_time = [single_info[1],single_info[3],offset,offset_ratio,single_info[4]] #名称，现价，涨跌额，涨跌幅，昨收
             
             to_return[list[i]] = single_real_time
     return to_return
